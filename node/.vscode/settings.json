@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "kraken",
+            "database": "${workspaceFolder:node}/prisma/database.db",
+            "group": "kraken"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

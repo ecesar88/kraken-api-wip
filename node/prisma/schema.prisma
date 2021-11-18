@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Repository {
+  codename       String  @unique
+  name           String
+  Device         Device? @relation(fields: [deviceCodename], references: [codename])
+  deviceCodename String?
+}
+
+model SupportedVersions {
+  codename String   @unique
+  eleven   Boolean
+  twelve   Boolean
+  Device   Device[]
+}
+
+model SupportedTypes {
+  codename String   @unique
+  gapps    Boolean
+  vanila   Boolean
+  Device   Device[]
+}
+
+model Device {
+  codename                  String            @unique
+  name                      String
+  brand                     String
+  xda_thread                String
+  supported_versions        SupportedVersions @relation(fields: [supportedVersionsCodename], references: [codename])
+  supported_types           SupportedTypes    @relation(fields: [supportedTypesCodename], references: [codename])
+  deprecated                Boolean
+  repositories              Repository[]
+  supportedVersionsCodename String
+  supportedTypesCodename    String
+}
